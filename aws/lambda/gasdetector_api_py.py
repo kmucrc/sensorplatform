@@ -4,23 +4,26 @@ import requests
 import datetime
 from pytz import timezone
 
+# gasdetect로 들어오는 값들을 처리하기 위한 코드
+
+# boto3를 사용하여 aws 서비스와 python application 연결
 client = boto3.client('iot-data', region_name='ap-northeast-2', endpoint_url='')    #set iot-core endpoint
 
 def lambda_handler(event, context):
-    # TODO implement
+    # date 저장을 위한 변수 저장
     now = datetime.datetime.now(timezone('Asia/Seoul'))
     nowDatetime = now.strftime('%Y-%m-%d %H:%M:%S')
     
     url = ''    # set opensearch endpoint
     
-    #event에 iot_core가 있을 시 iot_core 메세지 전달
+    #event에 iot_core가 있을 시 iot_core 메세지 publish
     if "iot_core" in event :
         res = client.publish(
             topic = 'pi/1',
             qos = 1,
             payload = json.dumps({"iot_core": "iot_core"})
         )
-    #event에 emergency가 있을 시 emergency 메세지 전달
+    #event에 emergency가 있을 시 emergency 메세지 publish
     elif "emergency" in event :
         res = client.publish(
             topic = 'pi/1',
@@ -32,7 +35,7 @@ def lambda_handler(event, context):
         msg = 'success'
         if("co" in event) :
             value_co = float(event['co']['value'])
-            #event.co.value 값이 1805가 넘어가면 warning 전달
+            #event.co.value 값이 1805가 넘어가면 warning메세지를 publish
             if(value_co >= 1805) :
                 res = client.publish(
                     topic = 'pi/1',
@@ -102,13 +105,18 @@ def lambda_handler(event, context):
         if("barometer" in event) :
             value_barometer = float(event['barometer']['value'])
               
+        # 성공여부를 publish
         res = client.publish(
             topic = 'pi/1',
             qos = 1,
             payload = json.dumps({"msg": msg})
         )
+    
+    # gasdetect 로 받은 값을 json화 시키고 현재 시간 값 넣어서 post
     data = json.loads(event['body'])
     data['date'] = nowDatetime
     headers = {'Content-type': 'application/json'}
+    
+    # auth값은 헤더의 값 참조
     response = requests.post(url, data = json.dumps(data), headers=headers, auth=('crc', event['headers']['crc'])).json()
     return response
