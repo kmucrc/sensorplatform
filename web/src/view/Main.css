@@ -1,0 +1,81 @@
+.main {
+    padding: 48px 60px;
+}
+
+.main-options {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.main-options-type, .main-options-field {
+    margin-right: 16px;
+    width: 15%;
+    min-width: 300px;
+}
+
+.main-options-datepicker {
+    width: 40%;
+    min-width: 280px;
+}
+
+.main-options-title {
+    margin: 16px 0;
+    color: #6e6e6e;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.main-options-select select {
+    margin: 16px 0;
+    border: 1px solid #e0e0e0;
+    padding: 8px 2px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.main-search {
+    padding: 24px 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: center;
+}
+
+.main-search button {
+    border: 0;
+    padding: 8px 48px;
+    border-radius: 4px;
+    background-color: #4d4d4d;
+    color: #fff;
+    font-size: 14px;
+}
+
+.main-search button:active {
+    opacity: 0.7;
+}
+
+.main-graph, .main-table {
+    margin: 24px 0;
+}
+
+.main-graph-title {
+    margin: 16px 0;
+    color: #6e6e6e;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.MuiFormControl-root {
+    width: 45%;
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+        padding: 12px 24px;
+    }
+
+    .main-options-datepicker {
+        width: auto;
+    }
+}
