@@ -29,7 +29,12 @@ const Map = (props) => {
   }, [props]);
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_MAP_API_KEY}>
+    <LoadScript
+      googleMapsApiKey={
+        process.env.REACT_APP_MAP_API_KEY ||
+        "AIzaSyAaaaBIJzW-mg5SQ93hV8FbXa-SvZstqDQ"
+      }
+    >
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={17}>
         {markers.map((e, i) => {
           return <Marker key={i} position={e} />;
