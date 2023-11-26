@@ -213,21 +213,18 @@ const Main = () => {
     console.log(q);
     // return;
     await axios
-      .get(
-        "https://3d2jb7xavd.execute-api.ap-northeast-2.amazonaws.com/new/proxyLambda",
-        {
-          headers: { accept: "application/json" },
-          params: {
-            query: JSON.stringify(q),
-            index: selectType,
-            source_conent_type: "application/json",
-            // auth: JSON.stringify({
-            //   id: process.env.REACT_APP_OPENSEARCH_ID,
-            //   pw: process.env.REACT_APP_OPENSEARCH_PW,
-            // }),
-          },
-        }
-      )
+      .get(process.env.REACT_APP_LAMBDA_URL, {
+        headers: { accept: "application/json" },
+        params: {
+          query: JSON.stringify(q),
+          index: selectType,
+          source_conent_type: "application/json",
+          // auth: JSON.stringify({
+          //   id: process.env.REACT_APP_OPENSEARCH_ID,
+          //   pw: process.env.REACT_APP_OPENSEARCH_PW,
+          // }),
+        },
+      })
       .then(function (res) {
         console.log(res);
         const data = JSON.parse(res.data.body);
@@ -717,8 +714,6 @@ const Main = () => {
 
 export default Main;
 
-
-
 // human information || bodytemp || step 을 검색 할 시
 // if (
 //   selectType === "human information" ||
@@ -1058,8 +1053,6 @@ export default Main;
 //     setChartLabel(dateList);
 //   }
 // }
-
-
 
 //         // {
 //         //   // human information, 체온온도습도, 걸음수이동거리는 다중 테이블
